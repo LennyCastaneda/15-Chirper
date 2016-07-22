@@ -1,0 +1,68 @@
+
+<!-- Partial HTML page to display user chirps -->
+
+<h1>Welcome, {{vm.username}} to the Chirper Home Page</h1>
+<div class=" logoutButton">
+    <button ng-click="vm.logoutUser()" class="btn btn-info">Logout</button>
+</div>
+
+<!-- Create in-line form with inputs on one side and table on the other side -->
+
+<div class="container chirpPanel">
+
+    <!-- Create form for posting new chirps -->
+
+    <div class="col-xs-4">
+        <form>
+            <div class="panel panel-info">
+                <div class="panel-heading">Post your Chirps!</div>
+                <div class="panel-body">
+                    <div class="chirpTextInput">
+                        <label for="todoText">Text</label>
+                        <textarea class="form-control" rows="5" id="chirp" maxlength="240" placeholder="Type in your message" ng-model="vm.newChirpText"></textarea>
+                    </div>
+                </div>
+                <div class="panel-footer postChirpButton">
+                    <button type="submit" ng-click="vm.postChirp(vm.newChirpText); vm.newChirpText ='';" class="btn btn-info">Post New Chirp</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Creating display for chirps and comments -->
+    
+    <div class="col-xs-8">
+        <div ng-repeat="data in vm.chirps">
+            <div class="panel panel-info">
+                <div class="panel-heading">{{data.User.UserName}}</div>
+                <div class="panel-body">
+                    <div>
+                        <p>{{data.Text}}</p>
+                        </br>
+                        <p>Posted: {{data.CreatedDate | date: 'MM/d/yy hh:mm:ss a'}}</p>
+                        <p class="likeCounter">{{data.Likes.length}} </p>
+                        <a class="glyphicon glyphicon-thumbs-up" ng-click="vm.likesManager(data.ChirpId, data.Likes)"></a>
+                        <a href="" ng-click="vm.showModal= !vm.showModal">add comment</a>
+                        <modal visible="vm.showModal"></modal>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-11">
+                <div ng-repeat="comments in data.Comments">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{comments.User.UserName}}</div>
+                        <div class="panel-body">
+                            <div>
+                                <p>{{comments.Text}}</p>
+                                </br>
+                                <p>Posted: {{comments.CreatedDate | date: 'MM/d/yy hh:mm:ss a'}}</p>
+                                <p class="likeCounter">{{comments.LikedCount}} </p>
+                                <a class="glyphicon glyphicon-thumbs-up" ng-click="vm.likeChirp(data.ChirpId)"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

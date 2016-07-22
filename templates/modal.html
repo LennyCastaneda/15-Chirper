@@ -1,0 +1,20 @@
+<div class="modal fade container">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add your comment!</h4>
+            </div>
+            <div class="modal-body" ng-transclude>
+                <form role="form">
+                    <div class="commentTextInput">
+                        <textarea class="form-control" rows="5" id="chirp" maxlength="240" placeholder="Type in your message" ng-model="vm.newCommentText"></textarea>
+                    </div>
+                    <div class="button">
+                        <button type="submit" ng-click="vm.postComment(vm.newCommentText, data.ChirpId); vm.showModal = !vm.showModal" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

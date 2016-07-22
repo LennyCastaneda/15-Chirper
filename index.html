@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chirper</title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
+    <!-- endbower -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/app/styles/styles.css">
+    <!-- endinject -->
+</head>
+
+<body ng-controller="AuthorizationController as vm">
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+    <!-- endbower -->
+    <!-- Chirp logo banner -->
+    <div class="logo">
+        <img src="img/logo.png">
+    </div>
+    
+    <!-- Anchor point for partial states -->
+
+    <div ui-view></div>
+
+    <!-- Create a copyright footer -->
+
+    <footer class="centFooter">
+        <p>&copy; 2016 Mark Srethabhakti.</p>
+    </footer>
+
+    <!-- inject:js -->
+    <script src="/app/app.js"></script>
+    <script src="/app/chirp/chirp.controller.js"></script>
+    <script src="/app/chirp/chirp.factory.js"></script>
+    <script src="/app/authorization/authorization.controller.js"></script>
+    <script src="/app/authorization/authorization.factory.js"></script>
+    <script src="/app/authorization/authorization.interceptor.js"></script>
+    <script src="/app/modal/modal.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>
