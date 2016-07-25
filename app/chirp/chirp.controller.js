@@ -22,7 +22,6 @@
         vm.postComment = postComment;
         vm.logoutUser = logoutUser;
 
-        vm.showmodal = false;
         vm.username = localStorageService.get('username');
 
         activate();
@@ -30,6 +29,7 @@
         ////////////////
 
         function activate() {
+
             getChirps();
 
         }
@@ -60,9 +60,8 @@
         function postChirp(chirpText) {
 
             ChirpFactory.postChirp(chirpText).then(function(response) {
-
+                    vm.chirps.push(response.data);
                     toastr.success('Chirp Successfully Posted!');
-                    getChirps();
                 },
                 function(error) {
                     if (typeof error === 'object') {
@@ -75,33 +74,38 @@
 
         //Checks chirps to see if they have been previously liked by logged in User and likes or unlikes accordingly
 
-        function likesManager(chirpId, likes) {
-            var likeId;
-            var hasLiked = false;
+        function likesManager(chirp) {
 
-            angular.forEach(likes, function(value, index){
-                if(value.User.Email = vm.username){
+            var likeId;
+            var chirpIndex = vm.chirps.indexOf(chirp);
+            var likedIndex;
+            var hasLiked = false;
+            
+            angular.forEach(chirp.Likes, function(value, index){
+                if(value.User.Email === vm.username){
                     hasLiked = true;
-                    likeId = likes[index].LikeId;
+                    likeId = chirp.Likes[index].LikeId;
+                    likedIndex = index;
                 }
             });
 
             if(hasLiked === true){
                 unlikeChirp(likeId);
+                vm.chirps[chirpIndex].Likes.splice(likedIndex, 1);
             }
             else{
-                likeChirp(chirpId);
+                likeChirp(chirp.ChirpId, chirpIndex);
             }
 
         }
 
         //Adds a like to a chirp based on the chirpId
 
-        function likeChirp(chirpId) {
-            ChirpFactory.likeChirp(chirpId).then(function(response) {
+        function likeChirp(chirpId, chirpIndex) {
 
+            ChirpFactory.likeChirp(chirpId).then(function(response) {
+                    vm.chirps[chirpIndex].Likes.push(response.data);
                     toastr.success('Chirp Liked!');
-                    getChirps();
                 },
                 function(error) {
                     if (typeof error === 'object') {
@@ -116,10 +120,10 @@
         //Removes a like from a chirp based on the likeId
 
         function unlikeChirp(likeId) {
+
             ChirpFactory.unlikeChirp(likeId).then(function(response) {
 
                     toastr.success('Chirp unliked!');
-                    getChirps();
                 },
                 function(error) {
                     if (typeof error === 'object') {
@@ -132,12 +136,14 @@
 
         //Posts a comment to a chirp based on its ChirpId
 
-        function postComment(commentText, chirpId) {
+        function postComment(commentText, chirp) {
 
-            ChirpFactory.postComment(commentText, chirpId).then(function(response) {
+            var chirpIndex = vm.chirps.indexOf(chirp);
 
+            ChirpFactory.postComment(commentText, chirp.ChirpId).then(function(response) {
+
+                    vm.chirps[chirpIndex].Comments.push(response.data);
                     toastr.success('Comment Successfully Posted!');
-                    getChirps();
                 },
                 function(error) {
                     if (typeof error === 'object') {
@@ -149,7 +155,9 @@
         }
 
         //Defining logoutUser to call logoutUser method in AuthorizationFactory and redirect user to login page upon clearing access_token from local storage
+
         function logoutUser() {
+
             AuthorizationFactory.logoutUser();
             $state.go('home');
             toastr.success('User successfully logged out!')

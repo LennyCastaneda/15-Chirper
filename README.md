@@ -15,3 +15,13 @@ Version 1.0.0
 -Gets chirps and comments on load
 
 -Added Bootstrap stylings for clean ui look
+
+
+
+Version 1.0.1
+
+-Changed code to no longer get Chirps after every update but instead push or splice elements to/from UI array
+
+-Fixed a bug where comments field would be pushed into next Chirp's header
+
+-Added clarifying comments

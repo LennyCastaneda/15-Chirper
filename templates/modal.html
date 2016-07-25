@@ -11,7 +11,7 @@
                         <textarea class="form-control" rows="5" id="chirp" maxlength="240" placeholder="Type in your message" ng-model="vm.newCommentText"></textarea>
                     </div>
                     <div class="button">
-                        <button type="submit" ng-click="vm.postComment(vm.newCommentText, data.ChirpId); vm.showModal = !vm.showModal" class="btn btn-primary">Submit</button>
+                        <button type="submit" ng-click="vm.postComment(vm.newCommentText, data); vm.showModal = !vm.showModal" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
